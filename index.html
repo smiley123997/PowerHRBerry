@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WorkPulse HRMS — Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>"/>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">⚡</span>
+      <span class="logo-text">WorkPulse</span>
+    </div>
+    <div class="sidebar-profile">
+      <div class="avatar" id="sidebarAvatar">--</div>
+      <div class="profile-info">
+        <div class="profile-name" id="sidebarName">--</div>
+        <div class="profile-role" id="sidebarRole">--</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-screen="dashboard"><span class="nav-icon">🏠</span><span>Dashboard</span></a>
+      <a href="#" class="nav-item" data-screen="leave"><span class="nav-icon">📅</span><span>Leave</span></a>
+      <a href="#" class="nav-item" data-screen="attendance"><span class="nav-icon">⏱️</span><span>Attendance</span></a>
+      <a href="#" class="nav-item" data-screen="profile"><span class="nav-icon">👤</span><span>My Profile</span></a>
+      <a href="#" class="nav-item" data-screen="payslip"><span class="nav-icon">💰</span><span>Payslip</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="#" class="nav-item logout" id="logoutBtn"><span class="nav-icon">🚪</span><span>Logout</span></a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <div class="topbar-search">
+        <span>🔍</span>
+        <input type="text" placeholder="Search anything..."/>
+      </div>
+      <div class="topbar-right">
+        <div class="clock-badge" id="liveClock">--:--</div>
+        <button class="notif-btn">🔔<span class="notif-dot"></span></button>
+        <div class="topbar-avatar" id="topbarAvatar">--</div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD SCREEN -->
+    <div class="screen active" id="screen-dashboard">
+      <div class="page-header">
+        <div>
+          <h1 id="greetingText">Good Morning 👋</h1>
+          <p class="page-subtitle">Here's your overview for today</p>
+        </div>
+      </div>
+
+      <!-- CHECK IN / OUT PANEL -->
+      <div class="checkin-panel" id="checkinPanel">
+        <div class="checkin-left">
+          <div class="checkin-status-dot" id="checkinDot"></div>
+          <div class="checkin-info">
+            <div class="checkin-title" id="checkinTitle">Not Checked In</div>
+            <div class="checkin-sub" id="checkinSub">Tap Check In to start your session</div>
+          </div>
+        </div>
+        <div class="checkin-timer-block">
+          <div class="checkin-timer" id="checkinTimer">00:00:00</div>
+          <div class="checkin-timer-label">Working Hours Today</div>
+        </div>
+        <div class="checkin-times">
+          <div class="checkin-time-item">
+            <span class="checkin-time-label">Check In</span>
+            <span class="checkin-time-val" id="displayCheckIn">--:--</span>
+          </div>
+          <div class="checkin-divider">→</div>
+          <div class="checkin-time-item">
+            <span class="checkin-time-label">Check Out</span>
+            <span class="checkin-time-val" id="displayCheckOut">--:--</span>
+          </div>
+        </div>
+        <div class="checkin-actions">
+          <button class="btn btn-checkin" id="checkInBtn">
+            <span id="checkInBtnIcon">▶</span>
+            <span id="checkInBtnText">Check In</span>
+          </button>
+          <button class="btn btn-break-named" id="breakMorningBtn" data-label="Morning Break">☕ Morning Break</button>
+          <button class="btn btn-break-named" id="breakLunchBtn"   data-label="Lunch Break">🍽 Lunch</button>
+          <button class="btn btn-break-named" id="breakEveningBtn" data-label="Evening Break">🌇 Evening Break</button>
+          <button class="btn btn-checkout" id="checkOutBtn">⏹ Check Out</button>
+          <button class="btn btn-permission" id="permissionBtn">🚶 Permission</button>
+        </div>
+        <div id="breakInfo" style="display:none;"></div>
+      </div>
+
+      <!-- TODAY'S TIMELINE -->
+      <div class="card" style="margin-bottom:20px;">
+        <div class="card-header">
+          <h3>⏱ Today's Activity Timeline</h3>
+          <span class="month-label" id="todayDateLabel">--</span>
+        </div>
+        <div id="sessionTimeline" style="padding:4px 0;"></div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-icon" style="background:#ede9fe">📅</div><div class="stat-info"><div class="stat-value">12</div><div class="stat-label">Leave Balance</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#dcfce7">⏰</div><div class="stat-info"><div class="stat-value" id="statCheckIn">--:--</div><div class="stat-label">Check-In Today</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#fef9c3">📊</div><div class="stat-info"><div class="stat-value">96%</div><div class="stat-label">Attendance (June)</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#fee2e2">⌛</div><div class="stat-info"><div class="stat-value" id="statHours">0h 0m</div><div class="stat-label">Hours Today</div></div></div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card calendar-card">
+          <div class="card-header"><h3>Attendance Calendar</h3><span class="month-label">June 2025</span></div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Leave Balance</h3></div>
+          <div class="leave-bars" id="leaveBars"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-header"><h3>Recent Requests</h3><a href="#" class="link-sm">View all →</a></div>
+          <div id="recentRequests"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Upcoming Holidays</h3></div>
+          <div id="holidayList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEAVE SCREEN -->
+    <div class="screen" id="screen-leave">
+      <div class="page-header">
+        <div><h1>Leave Management</h1><p class="page-subtitle">Apply and track your leave requests</p></div>
+        <button class="btn btn-primary" id="openLeaveModal">+ Apply Leave</button>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Leave History</h3></div>
+        <table class="data-table">
+          <thead><tr><th>Type</th><th>From</th><th>To</th><th>Days</th><th>Reason</th><th>Status</th></tr></thead>
+          <tbody id="leaveHistoryBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ATTENDANCE SCREEN -->
+    <div class="screen" id="screen-attendance">
+      <div class="page-header"><div><h1>Attendance Log</h1><p class="page-subtitle">Your daily attendance records</p></div></div>
+      <div class="card today-session-card">
+        <div class="card-header"><h3>📍 Today's Session</h3><span class="month-label" id="todayDateLabel">--</span></div>
+        <div class="session-summary-grid">
+          <div class="session-item"><div class="session-label">Check In</div><div class="session-val" id="attCheckIn">--:--</div></div>
+          <div class="session-arrow">→</div>
+          <div class="session-item"><div class="session-label">Check Out</div><div class="session-val" id="attCheckOut">--:--</div></div>
+          <div class="session-sep"></div>
+          <div class="session-item"><div class="session-label">Total Hours</div><div class="session-val accent" id="attTotalHours">0h 0m</div></div>
+          <div class="session-item"><div class="session-label">Status</div><div class="session-val" id="attStatus"><span class="badge badge-yellow">Not Started</span></div></div>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-icon" style="background:#dcfce7">✅</div><div class="stat-info"><div class="stat-value">5</div><div class="stat-label">Present Days (Jun)</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#fee2e2">❌</div><div class="stat-info"><div class="stat-value">0</div><div class="stat-label">Absent Days (Jun)</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#fef9c3">⏰</div><div class="stat-info"><div class="stat-value">09:04</div><div class="stat-label">Avg Check-In</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:#ede9fe">⌛</div><div class="stat-info"><div class="stat-value">9h 04m</div><div class="stat-label">Avg Hours/Day</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Daily Log — June 2025</h3></div>
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Check In</th><th>Check Out</th><th>Hours</th><th>Status</th></tr></thead>
+          <tbody id="attendanceLogBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PROFILE SCREEN -->
+    <div class="screen" id="screen-profile">
+      <div class="page-header">
+        <div><h1>My Profile</h1><p class="page-subtitle">Personal and employment information</p></div>
+        <button class="btn btn-outline">✏️ Edit Profile</button>
+      </div>
+      <div class="profile-grid">
+        <div class="card profile-card">
+          <div class="profile-avatar-lg" id="profileAvatarLg">--</div>
+          <h2 id="profileName">--</h2>
+          <p id="profileRole">--</p>
+          <div class="profile-badges">
+            <span class="badge badge-green">Active</span>
+            <span class="badge badge-blue">Full-Time</span>
+          </div>
+        </div>
+        <div class="card"><div class="card-header"><h3>Personal Details</h3></div><div class="detail-list" id="personalDetails"></div></div>
+        <div class="card"><div class="card-header"><h3>Employment Details</h3></div><div class="detail-list" id="employmentDetails"></div></div>
+      </div>
+    </div>
+
+    <!-- PAYSLIP SCREEN -->
+    <div class="screen" id="screen-payslip">
+      <div class="page-header"><div><h1>Payslip</h1><p class="page-subtitle">Your salary statements</p></div></div>
+      <div class="card">
+        <div class="card-header"><h3>Payslip History</h3></div>
+        <table class="data-table">
+          <thead><tr><th>Month</th><th>Gross Salary</th><th>Deductions</th><th>Net Pay</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="payslipBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- LEAVE MODAL — must be direct child of body, outside app-shell -->
+<div class="modal-overlay" id="leaveModal">
+  <div class="modal">
+    <div class="modal-header"><h3>Apply for Leave</h3><button class="modal-close" id="closeLeaveModal">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Leave Type</label><select class="form-control" id="leaveType"><option>Casual Leave</option><option>Sick Leave</option><option>Earned Leave</option><option>Maternity / Paternity</option></select></div>
+      <div class="form-row">
+        <div class="form-group"><label>From Date</label><input type="date" class="form-control" id="leaveFrom"/></div>
+        <div class="form-group"><label>To Date</label><input type="date" class="form-control" id="leaveTo"/></div>
+      </div>
+      <div class="form-group"><label>Reason</label><textarea class="form-control" rows="3" id="leaveReason" placeholder="Brief reason for leave..."></textarea></div>
+      <div id="leaveFormError" style="color:#ef4444;font-size:12px;margin-top:4px;display:none;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" id="cancelLeave">Cancel</button>
+      <button class="btn btn-primary" id="submitLeaveBtn">Submit Request</button>
+    </div>
+  </div>
+</div>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

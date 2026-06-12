@@ -1,0 +1,74 @@
+/* ============================================================
+   WorkPulse HRMS — Admin Theme CSS
+   ============================================================ */
+
+.admin-theme .sidebar {
+  background: #1e1b4b;
+}
+
+.admin-theme .sidebar-logo {
+  border-bottom-color: rgba(255,255,255,.1);
+}
+
+.admin-theme .nav-item.active {
+  background: #6366f1;
+}
+
+.admin-avatar {
+  background: #7c3aed !important;
+}
+
+.admin-avatar-sm {
+  background: #7c3aed;
+}
+
+/* Report bars */
+.report-bar-item { margin-bottom: 14px; }
+.report-bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+.report-bar-track { background: var(--surface-2); border-radius: 99px; height: 10px; overflow: hidden; }
+.report-bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #6366f1, #7c3aed); transition: width .5s ease; }
+
+/* ── ADMIN LAYOUT FIXES ──────────────────────────────────── */
+
+/* Approvals screen — max readable width */
+#approvalCards { max-width: 760px; }
+
+/* Employee table — prevent action buttons from wrapping */
+.data-table .table-actions-cell { white-space: nowrap; }
+
+/* Card header — ensure search+filter don't overflow into title */
+.card-header { flex-wrap: wrap; gap: 10px; }
+
+/* Page header — tighten on smaller viewports */
+.page-header { flex-wrap: wrap; gap: 12px; }
+
+/* Salary upload form — constrain the upload card */
+#screen-admin-salary .dashboard-grid { grid-template-columns: 380px 1fr; }
+@media (max-width: 900px) {
+  #screen-admin-salary .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+/* Work hours table — min width so it scrolls rather than squishes */
+#screen-admin-workhours .data-table { min-width: 800px; }
+
+/* Stat grid — consistent card height */
+.stat-card { min-height: 80px; }
+
+/* Admin topbar avatar size fix */
+.admin-avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Live dot alignment in card header */
+.card-header .live-dot { margin-left: 6px; flex-shrink: 0; }
+
+/* Bar chart label alignment */
+.bar-label { text-align: right; }
